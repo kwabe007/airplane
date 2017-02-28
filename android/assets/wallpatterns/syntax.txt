@@ -1,0 +1,8 @@
+NOTE: $(n) means variable named 'n'
+
+#row1: first int (> 0) indicates number of walls $(n), followed by pairs of dash-separated floats (>= 0.0, <= 1.0) indicating
+each wall's relative start and end respectively.
+Ex1: '2 0.2-0.3 0.5-1-0'
+
+#row2: $(n) ints (> 0.0) indicating each walls relative height.
+Ex1: '0.1 0.5' 
