@@ -118,7 +118,7 @@ public class Plane extends Entity {
             reverse = true;
             index = index * -1;
         }
-        TextureRegion region = planeAnim.getKeyFrames()[index];
+        TextureRegion region = (TextureRegion)planeAnim.getKeyFrames()[index];
         if (reverse && !region.isFlipX())
             region.flip(true,false);
         else if (!reverse && region.isFlipX())
