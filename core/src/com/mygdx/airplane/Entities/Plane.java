@@ -11,19 +11,24 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.airplane.Airplane;
+import com.mygdx.airplane.Entities.Sprites.SpriteGroup;
 import com.mygdx.airplane.Screen.PlayScreen;
 
 /**
  * Created by Kwa on 2016-08-09.
  */
-public class Plane extends Entity {
+public class Plane extends Entity implements Disposable{
 
     public enum State {ALIVE, DEAD};
 
     public State state;
 
     private Animation planeAnim;
+    private Texture planeTexture;
+
+    private SpriteGroup debris; //Handles the creation of debris sprites
 
     static final private float ROTATION_SPEED = 0.06f;
     /* Minimum and maximum rotation angles for the plane*/
@@ -45,6 +50,7 @@ public class Plane extends Entity {
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(new Vector2(x,y));
         body = world.createBody(bodyDef);
+        debris = null;
 
         /* Define the shape of the main fixture as a circle*/
         CircleShape circleShape = new CircleShape();
@@ -128,26 +134,30 @@ public class Plane extends Entity {
 
     @Override
     public void draw (SpriteBatch batch) {
-        sprite.draw(batch);
+        if (debris != null) debris.draw(batch);
+        else sprite.draw(batch);
     }
 
     @Override
     protected void setupSprite() {
-        Texture texture = new Texture("plane.png");
-        sprite = new Sprite(texture);
+        planeTexture = new Texture("plane.png");
+        sprite = new Sprite(planeTexture);
         sprite.setBounds(0, 0, 3.5f, 2.625f);
-        planeAnim = addAnimation(texture, 5, 0, 0, 640, 480);
+        planeAnim = addAnimation(planeTexture, 5, 0, 0, 640, 480);
     }
 
     @Override
     public void update(float dt) {
-        if (setToDestroy && !isDestroyed())
+        if (setToDestroy && !isDestroyed()) {
             destroy();
+            createDebris();
+        }
         else if (!isDestroyed()) {
             sprite.setRegion(getAnimationFrame());
             sprite.setPosition(body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2);
             body.setLinearVelocity(new Vector2((float) -Math.sin(body.getAngle()) * SPEEDFACTOR, 0));
         } else {
+            debris.update(dt);
 
         }
     }
@@ -174,6 +184,11 @@ public class Plane extends Entity {
         state = State.DEAD;
     }
 
+    protected void createDebris() {
+        debris = new SpriteGroup();
+        debris.setBounds(sprite.getX(), sprite.getY());
+    }
+
     public void rotateToPoint(float x, float y) {
         float bodyAngle = body.getAngle();
         Vector2 clickedPoint = new Vector2(x, y);
@@ -196,5 +211,12 @@ public class Plane extends Entity {
         float newAngle = body.getAngle() + ROTATION_SPEED;
         newAngle = newAngle > MAX_ROTATION ? MAX_ROTATION : newAngle;
         body.setTransform(body.getPosition(), newAngle);
+    }
+
+    @Override
+    public void dispose() {
+        planeTexture.dispose();
+        debris.dispose();
+
     }
 }

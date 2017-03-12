@@ -1,38 +1,23 @@
 package com.mygdx.airplane;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.mygdx.airplane.Dialogs.ErrorDialog;
 import com.mygdx.airplane.Screen.MenuScreen;
-import com.mygdx.airplane.Screen.PlayScreen;
-import com.mygdx.airplane.Tools.Function;
 
 
-//PRIMARY FOR INITIAL RELEASE
-//TODO: CREATE MORE DIFFICULT WALLPATTERNS
+//PRIMARY FOR SECOND RELEASE
+//TODO: MAKE SURE THERE IS A NO-INPUT DELAY WHEN GAME IS OVER SO YOU CAN DON'T ACCIDENTALLY SKIP YOUR SCORE
 
 //SECONDARY FOR A LESS SHITTY GAMEPLAY EXPERIENCE
-//TODO: ADD MENU MUSIC
 //TODO: ADD PLAYING MUSIC
-//TODO: ADD SOUND WHEN PASSING WALL
-//TODO: ADD ANIMATION WHEN PLANE GOES R.I.P
 //TODO: ADD SMOOTH TRANSITION BETWEEN PLAYING AND GAME OVER SCREEN
 //TODO: ADD SMOOTH TRANSITION BETWEEN GAME OVER SCREEN AND NEW GAME
 //TODO: ADD SPLASH SCREEN(S)
 //TODO: ADD ANIMATED TEXT IN MENU SCREEN
-
-//OTHER
-//TODO: MAYBE START GITHUBBING THIS PROJECT (at least locally)???
 
 
 

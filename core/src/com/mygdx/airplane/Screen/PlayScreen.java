@@ -56,6 +56,8 @@ public class PlayScreen implements Screen, InputProcessor {
     private int primaryTouchIndex;
     private int secondaryTouchIndex;
 
+    private float gameOverInputTimer = 0f; //Time elapsed game over is shown and input is accepted
+
     private Sprite sprite;
     private Backdrop backdrop;
 
@@ -63,6 +65,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
     public static final boolean CAN_DIE = true;
     public static final float PLANE_SPEED = 15f;
+    private static final float GAME_OVER_INPUT_WAIT = 1.5f;
 
     public static final String HIGH_SCORE_FILE = "score.txt";
 
@@ -156,13 +159,18 @@ public class PlayScreen implements Screen, InputProcessor {
         }
 
         if (isGameOver()) {
+            gameOverInputTimer += delta;
 
             gameOverScene.draw();
 
-            if(Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                PlayScreen newPlayScreen = setupNewScreen();
-                game.setScreen(newPlayScreen);
-                dispose();
+            if (gameOverInputTimer > GAME_OVER_INPUT_WAIT) {
+
+                if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+                    PlayScreen newPlayScreen = setupNewScreen();
+                    game.setScreen(newPlayScreen);
+                    dispose();
+                }
+
             }
 
         }
@@ -328,12 +336,10 @@ public class PlayScreen implements Screen, InputProcessor {
         gameOverShown = true;
     }
 
-    public void showGameOver() {
-        ;
-    }
 
     @Override
     public void dispose() {
+        plane.dispose();
         world.dispose();
         debug.dispose();
         hud.dispose();

@@ -7,11 +7,11 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * Created by Kwa on 2016-08-22.
  */
-public abstract class BackgroundSprite extends Sprite {
+public class ExtendedSprite extends Sprite {
 
     protected Vector2 velocityVector;
 
-    public BackgroundSprite(Texture texture, Vector2 velocityVector) {
+    public ExtendedSprite(Texture texture, Vector2 velocityVector) {
         super(texture);
         this.velocityVector = velocityVector;
     }
@@ -20,6 +20,8 @@ public abstract class BackgroundSprite extends Sprite {
         this.velocityVector = velocityVector;
     }
 
-    public abstract void update(float dt);
+    public void update(float dt) {
+        setPosition(getX() + velocityVector.x * dt, getY() + velocityVector.y * dt);
+    }
 
 }

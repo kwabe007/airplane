@@ -1,21 +1,14 @@
 package com.mygdx.airplane.Background;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.airplane.Objects.Wall;
 import com.mygdx.airplane.Screen.PlayScreen;
 
 import java.util.Iterator;
@@ -29,7 +22,7 @@ public class Backdrop implements Disposable {
     ShapeRenderer renderer;
     OrthographicCamera camera;
     Array<Texture> textureArray;
-    LinkedList<BackgroundSprite> bgSpriteLinkedList;
+    LinkedList<ExtendedSprite> bgSpriteLinkedList;
     private Random random;
 
     private static final float CLOUD_WIDTH = 3.2f;
@@ -41,7 +34,7 @@ public class Backdrop implements Disposable {
         renderer = new ShapeRenderer();
         camera = screen.getCamera();
 
-        bgSpriteLinkedList = new LinkedList<BackgroundSprite>();
+        bgSpriteLinkedList = new LinkedList<ExtendedSprite>();
 
         textureArray = new Array<Texture>();
         textureArray.add(new Texture("cloud.png"));
@@ -59,7 +52,7 @@ public class Backdrop implements Disposable {
     }
 
     private void generateCloud (boolean withX) {
-        BackgroundSprite cloudSprite = new Cloud(textureArray.get(0), new Vector2(-2f, 0));
+        ExtendedSprite cloudSprite = new Cloud(textureArray.get(0), new Vector2(-2f, 0));
 
         float lowerYBound = camera.position.y - camera.viewportHeight / 2 - CLOUD_HEIGHT / 2;
         float higherYBound = camera.position.y + camera.viewportHeight / 2 - CLOUD_HEIGHT / 2;
@@ -88,8 +81,8 @@ public class Backdrop implements Disposable {
             generateCloud();
         }
 
-        for (Iterator<BackgroundSprite> iterator = bgSpriteLinkedList.iterator(); iterator.hasNext();) {
-            BackgroundSprite cloudSprite = iterator.next();
+        for (Iterator<ExtendedSprite> iterator = bgSpriteLinkedList.iterator(); iterator.hasNext();) {
+            ExtendedSprite cloudSprite = iterator.next();
             cloudSprite.update(dt);
 
             /*Remove wall if it's past the top of screen shown by camera*/
@@ -113,7 +106,7 @@ public class Backdrop implements Disposable {
 
         batch.begin();
 
-        for (BackgroundSprite cloudSprite : bgSpriteLinkedList) {
+        for (ExtendedSprite cloudSprite : bgSpriteLinkedList) {
             cloudSprite.draw(batch);
         }
 
