@@ -174,8 +174,6 @@ public class PlayScreen implements Screen, InputProcessor {
             }
 
         }
-        //game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-
 
         if(isGameOver() && !isGameOverShown()) {
             updateHighscore();

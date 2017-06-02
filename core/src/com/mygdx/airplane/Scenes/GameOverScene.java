@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.airplane.Airplane;
+import com.mygdx.airplane.NetworkProcess.SendScore;
 import com.mygdx.airplane.Screen.PlayScreen;
 
 /**
@@ -38,6 +39,8 @@ public class GameOverScene extends Stage {
 
         Table table = new Table();
         table.setFillParent(true);
+
+        //new SendScore();
 
         /*Generate a dynamic font based on font resource*/
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SIMPLIFICA_Typeface.ttf"));
